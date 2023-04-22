@@ -1,7 +1,7 @@
 package com.debproject.onlineCourses.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import com.debproject.onlineCourses.entities.enums.Payment;
@@ -19,15 +19,15 @@ public class Registration implements Serializable {
 	@EmbeddedId
 	private RegistrationPK id = new RegistrationPK();
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-	private Instant moment;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "GMT")
+	private LocalDateTime moment;
 	
 	private Integer payment;
 	
 	public Registration() {
 	}
 
-	public Registration(Student student, Course course, Instant moment, Payment payment) {
+	public Registration(Student student, Course course, LocalDateTime moment, Payment payment) {
 		super();
 		id.setStudent(student);
 		id.setCourse(course);
@@ -52,11 +52,11 @@ public class Registration implements Serializable {
 		id.setStudent(student);
 	}
 	
-	public Instant getMoment() {
+	public LocalDateTime getMoment() {
 		return moment;
 	}
 
-	public void setMoment(Instant moment) {
+	public void setMoment(LocalDateTime moment) {
 		this.moment = moment;
 	}
 
@@ -68,6 +68,12 @@ public class Registration implements Serializable {
 		if(payment != null) {
 			this.payment = payment.getCode();
 		}
+	}
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "GMT")
+	public LocalDateTime getAcessTime() {
+		LocalDateTime acess = moment.plusMonths(6);
+		return acess;
 	}
 
 	@Override

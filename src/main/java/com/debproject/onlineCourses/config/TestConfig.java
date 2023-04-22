@@ -1,6 +1,7 @@
 package com.debproject.onlineCourses.config;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,10 +87,12 @@ public class TestConfig implements CommandLineRunner {
 		
 		lessonRepository.saveAll(Arrays.asList(l1_1, l1_2, l1_3, l1_4, l2_1, l2_2, l2_3, l2_4, l3_1, l3_2, l3_3));
 		
-		Registration r1 = new Registration(s1, c2, Instant.parse("2019-06-20T19:53:07Z"), Payment.CREDITO_AVISTA);
-		Registration r2 = new Registration(s1, c3, Instant.parse("2019-06-20T20:00:04Z"), Payment.CREDITO_AVISTA);
-		Registration r3 = new Registration(s2, c1, Instant.parse("2019-07-20T19:22:08Z"), Payment.BOLETO);
-		Registration r4 = new Registration(s2, c3, Instant.parse("2019-07-20T19:42:06Z"), Payment.BOLETO);
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+		Registration r1 = new Registration(s1, c2, LocalDateTime.parse("22/06/2020 20:01:25", fmt), Payment.CREDITO_AVISTA);
+		Registration r2 = new Registration(s1, c3, LocalDateTime.parse("22/06/2020 20:10:05", fmt), Payment.CREDITO_AVISTA);
+		Registration r3 = new Registration(s2, c1, LocalDateTime.parse("28/06/2020 17:16:42", fmt), Payment.BOLETO);
+		Registration r4 = new Registration(s2, c3, LocalDateTime.parse("29/06/2020 08:05:02", fmt), Payment.BOLETO);
 		
 		registrationRepository.saveAll(Arrays.asList(r1, r2, r3, r4));
 	}
