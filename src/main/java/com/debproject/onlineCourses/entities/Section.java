@@ -69,6 +69,25 @@ public class Section implements Serializable {
 	public Set<Lesson> getLessons() {
 		return lessons;
 	}
+	
+	public String getSubTotalDuration() {
+		int sumHours = 0;
+		int sumMinutes = 0; 
+		for(Lesson x : lessons) {
+			String[] fields = x.getDuration().split(":"); 
+			int hours = Integer.parseInt(fields[0]);
+			int minutes = Integer.parseInt(fields[1]);
+			sumHours += hours;
+			sumMinutes += minutes;
+		}
+		if(sumMinutes >= 60) {
+			int result = (int) sumMinutes/60;
+			sumHours += result;
+			sumMinutes = sumMinutes%60;
+		}
+			String duration = Integer.toString(sumHours) + "h" + Integer.toString(sumMinutes) + "m";
+			return duration;
+	}
 
 	@Override
 	public int hashCode() {

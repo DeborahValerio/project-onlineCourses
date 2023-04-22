@@ -94,6 +94,25 @@ public class Course implements Serializable {
 		return registrations;
 	}
 
+	public String getTotalDuration() {
+		int sumHours = 0;
+		int sumMinutes = 0; 
+		for(Section x : sections) {
+			String[] fields = x.getSubTotalDuration().split("[hm]+");
+			int hours = Integer.parseInt(fields[0]);
+			int minutes = Integer.parseInt(fields[1]);
+			sumHours += hours;
+			sumMinutes += minutes;
+		}
+		if(sumMinutes >= 60) {
+			int result = (int) sumMinutes/60;
+			sumHours += result;
+			sumMinutes = sumMinutes%60;
+		}
+			String duration = Integer.toString(sumHours) + "h" + Integer.toString(sumMinutes) + "m";
+			return duration;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
