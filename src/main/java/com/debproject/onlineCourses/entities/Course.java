@@ -1,7 +1,9 @@
 package com.debproject.onlineCourses.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Course implements Serializable {
@@ -24,6 +27,9 @@ public class Course implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
+	
+	@OneToMany (mappedBy = "course")
+	private Set<Lesson> lessons = new HashSet<>();
 	
 	public Course() {
 	}
@@ -75,6 +81,10 @@ public class Course implements Serializable {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	
+	public Set<Lesson> getLessons() {
+		return lessons;
 	}
 
 	@Override
