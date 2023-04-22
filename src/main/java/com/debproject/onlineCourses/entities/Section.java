@@ -1,7 +1,9 @@
 package com.debproject.onlineCourses.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -11,31 +13,33 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
-public class Lesson implements Serializable {
+public class Section implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String title;
-	private String duration;
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "section_id")
-	private Section section;
+	@JoinColumn(name = "course_id")
+	private Course course;
 	
-	public Lesson() {
+	@OneToMany(mappedBy = "section")
+	private Set<Lesson> lessons = new HashSet<>();
+	
+	public Section() {
 	}
 
-	public Lesson(Long id, String title, String duration, Section section) {
+	public Section(Long id, String title, Course course) {
 		super();
 		this.id = id;
 		this.title = title;
-		this.duration = duration;
-		this.section = section;
+		this.course = course;
 	}
 
 	public Long getId() {
@@ -54,20 +58,16 @@ public class Lesson implements Serializable {
 		this.title = title;
 	}
 
-	public String getDuration() {
-		return duration;
+	public Course getCourse() {
+		return course;
 	}
 
-	public void setDuration(String duration) {
-		this.duration = duration;
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
-	public Section getSection() {
-		return section;
-	}
-
-	public void setSection(Section section) {
-		this.section = section;
+	public Set<Lesson> getLessons() {
+		return lessons;
 	}
 
 	@Override
@@ -83,8 +83,7 @@ public class Lesson implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Lesson other = (Lesson) obj;
+		Section other = (Section) obj;
 		return Objects.equals(id, other.id);
 	}
-
 }

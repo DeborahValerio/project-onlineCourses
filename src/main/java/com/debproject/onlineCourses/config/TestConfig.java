@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 import com.debproject.onlineCourses.entities.Category;
 import com.debproject.onlineCourses.entities.Course;
 import com.debproject.onlineCourses.entities.Lesson;
+import com.debproject.onlineCourses.entities.Section;
 import com.debproject.onlineCourses.entities.Student;
 import com.debproject.onlineCourses.repositories.CategoryRepository;
 import com.debproject.onlineCourses.repositories.CourseRepository;
 import com.debproject.onlineCourses.repositories.LessonRepository;
+import com.debproject.onlineCourses.repositories.SectionRepository;
 import com.debproject.onlineCourses.repositories.StudentRepository;
 
 @Configuration
@@ -28,6 +30,9 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private SectionRepository sectionRepository;
 	
 	@Autowired
 	private LessonRepository lessonRepository;
@@ -47,23 +52,33 @@ public class TestConfig implements CommandLineRunner {
 		Course c2 = new Course(null, "Implementos agricolas", "Tipos e operacao", "Fagioli", cat2);
 		Course c3 = new Course(null, "Tratores e motores", "Modelos, funcionamento e operacao", "Fagioli", cat2);
 		
-		Lesson l11 = new Lesson(null, "Identificacao", "00:30", c1);
-		Lesson l12 = new Lesson(null, "Danos", "00:25", c1);
-		Lesson l13 = new Lesson(null, "Controle 1", "00:33", c1);
-		Lesson l14 = new Lesson(null, "Controle 2", "00:28", c1);
-		
-		Lesson l21 = new Lesson(null, "O que são", "00:18", c2);
-		Lesson l22 = new Lesson(null, "Arados, Subsoladores e Grades", "00:38", c2);
-		Lesson l23 = new Lesson(null, "Pulverizadores", "00:26", c2);
-		Lesson l24 = new Lesson(null, "Semeadoras", "00:24", c2);
-		
-		Lesson l31 = new Lesson(null, "Motores", "00:32", c3);
-		Lesson l32 = new Lesson(null, "Tratores", "00:31", c3);
-		Lesson l33 = new Lesson(null, "Implementos", "00:29", c3);
-		
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
 		courseRepository.saveAll(Arrays.asList(c1, c2, c3));
-		lessonRepository.saveAll(Arrays.asList(l11, l12, l13, l14, l21, l22, l23, l24, l31, l32, l33));
+		
+		Section sec1_1 = new Section(null, "Secao A", c1);
+		Section sec1_2 = new Section(null, "Secao B", c1);
+		Section sec2_1 = new Section(null, "Secao A", c2);
+		Section sec2_2 = new Section(null, "Secao B", c2);
+		Section sec3_1 = new Section(null, "Secao A", c3);
+		
+		sectionRepository.saveAll(Arrays.asList(sec1_1, sec1_2, sec2_1, sec2_2, sec3_1));
+		
+		Lesson l1_1 = new Lesson(null, "Identificacao", "00:30", sec1_1);
+		Lesson l1_2 = new Lesson(null, "Danos", "00:25", sec1_1);
+		Lesson l1_3 = new Lesson(null, "Controle 1", "00:33", sec1_2);
+		Lesson l1_4 = new Lesson(null, "Controle 2", "00:28", sec1_2);
+		
+		Lesson l2_1 = new Lesson(null, "O que são", "00:18", sec2_1);
+		Lesson l2_2 = new Lesson(null, "Arados, Subsoladores e Grades", "00:38", sec2_2);
+		Lesson l2_3 = new Lesson(null, "Pulverizadores", "00:26", sec2_2);
+		Lesson l2_4 = new Lesson(null, "Semeadoras", "00:24", sec2_2);
+		
+		Lesson l3_1 = new Lesson(null, "Motores", "00:32", sec3_1);
+		Lesson l3_2 = new Lesson(null, "Tratores", "00:31", sec2_2);
+		Lesson l3_3 = new Lesson(null, "Implementos", "00:29", sec2_2);
+		
+		
+		lessonRepository.saveAll(Arrays.asList(l1_1, l1_2, l1_3, l1_4, l2_1, l2_2, l2_3, l2_4, l3_1, l3_2, l3_3));
 		
 		
 	}
