@@ -31,6 +31,9 @@ public class Course implements Serializable {
 	@OneToMany (mappedBy = "course")
 	private Set<Section> sections = new HashSet<>();
 	
+	@OneToMany(mappedBy = "id.course")
+	private Set<Registration> registrations = new HashSet<>();
+	
 	public Course() {
 	}
 
@@ -85,6 +88,10 @@ public class Course implements Serializable {
 	
 	public Set<Section> getSection() {
 		return sections;
+	}
+	
+	public Set<Registration> getRegistrations() {
+		return registrations;
 	}
 
 	@Override

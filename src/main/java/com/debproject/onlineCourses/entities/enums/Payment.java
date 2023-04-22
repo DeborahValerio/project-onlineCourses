@@ -3,7 +3,7 @@ package com.debproject.onlineCourses.entities.enums;
 public enum Payment {
 
 	PIX(1),
-	DEBITO(2),
+	BOLETO(2),
 	CREDITO_AVISTA(3),
 	CREDITO_APRAZO(4);
 

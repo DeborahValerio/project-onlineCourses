@@ -1,12 +1,17 @@
 package com.debproject.onlineCourses.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Student implements Serializable {
@@ -18,6 +23,9 @@ public class Student implements Serializable {
 	private String name;
 	private String email;
 	private String phone;
+	
+	@OneToMany(mappedBy = "id.student")
+	private Set<Registration> registrations = new HashSet<>();
 	
 	public Student() {
 	}
@@ -60,6 +68,15 @@ public class Student implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	
+	@JsonIgnore
+	public Set<Course> getCourses(){
+		Set<Course> set = new HashSet<>();
+		for(Registration x : registrations) {
+			set.add(x.getCourse());
+		}
+		return set;
 	}
 
 	@Override

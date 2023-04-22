@@ -1,5 +1,6 @@
 package com.debproject.onlineCourses.config;
 
+import java.time.Instant;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,14 @@ import org.springframework.context.annotation.Profile;
 import com.debproject.onlineCourses.entities.Category;
 import com.debproject.onlineCourses.entities.Course;
 import com.debproject.onlineCourses.entities.Lesson;
+import com.debproject.onlineCourses.entities.Registration;
 import com.debproject.onlineCourses.entities.Section;
 import com.debproject.onlineCourses.entities.Student;
+import com.debproject.onlineCourses.entities.enums.Payment;
 import com.debproject.onlineCourses.repositories.CategoryRepository;
 import com.debproject.onlineCourses.repositories.CourseRepository;
 import com.debproject.onlineCourses.repositories.LessonRepository;
+import com.debproject.onlineCourses.repositories.RegistrationRepository;
 import com.debproject.onlineCourses.repositories.SectionRepository;
 import com.debproject.onlineCourses.repositories.StudentRepository;
 
@@ -36,6 +40,9 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private LessonRepository lessonRepository;
+	
+	@Autowired
+	private RegistrationRepository registrationRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -74,13 +81,17 @@ public class TestConfig implements CommandLineRunner {
 		Lesson l2_4 = new Lesson(null, "Semeadoras", "00:24", sec2_2);
 		
 		Lesson l3_1 = new Lesson(null, "Motores", "00:32", sec3_1);
-		Lesson l3_2 = new Lesson(null, "Tratores", "00:31", sec2_2);
-		Lesson l3_3 = new Lesson(null, "Implementos", "00:29", sec2_2);
-		
+		Lesson l3_2 = new Lesson(null, "Tratores", "00:31", sec3_1);
+		Lesson l3_3 = new Lesson(null, "Implementos", "00:29", sec3_1);
 		
 		lessonRepository.saveAll(Arrays.asList(l1_1, l1_2, l1_3, l1_4, l2_1, l2_2, l2_3, l2_4, l3_1, l3_2, l3_3));
 		
+		Registration r1 = new Registration(s1, c2, Instant.parse("2019-06-20T19:53:07Z"), Payment.CREDITO_AVISTA);
+		Registration r2 = new Registration(s1, c3, Instant.parse("2019-06-20T20:00:04Z"), Payment.CREDITO_AVISTA);
+		Registration r3 = new Registration(s2, c1, Instant.parse("2019-07-20T19:22:08Z"), Payment.BOLETO);
+		Registration r4 = new Registration(s2, c3, Instant.parse("2019-07-20T19:42:06Z"), Payment.BOLETO);
 		
+		registrationRepository.saveAll(Arrays.asList(r1, r2, r3, r4));
 	}
 	
 	
