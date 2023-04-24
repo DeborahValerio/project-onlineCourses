@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.debproject.onlineCourses.entities.Student;
 import com.debproject.onlineCourses.repositories.StudentRepository;
+import com.debproject.onlineCourses.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class StudentService {
@@ -21,7 +22,7 @@ public class StudentService {
 	
 	public Student findById(Long id) {
 		Optional<Student> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public Student insert(Student obj) {
