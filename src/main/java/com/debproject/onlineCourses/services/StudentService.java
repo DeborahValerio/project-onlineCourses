@@ -12,6 +12,8 @@ import com.debproject.onlineCourses.repositories.StudentRepository;
 import com.debproject.onlineCourses.services.exceptions.DatabaseException;
 import com.debproject.onlineCourses.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class StudentService {
 
@@ -45,9 +47,13 @@ public class StudentService {
 	}
 	
 	public Student update(Long id, Student obj) {
-		Student entity = repository.getReferenceById(id);
-		updateData(entity, obj);
-		return repository.save(entity);
+		try {
+			Student entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 	
 	private void updateData(Student entity, Student obj) {
